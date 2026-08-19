@@ -67,6 +67,7 @@ public:
     int id;
     int x;
     int y;
+    std::string resource = "None";
     bool isInCity;
     bool isOccupied;
     domain* domain;
@@ -74,6 +75,13 @@ public:
     district* district;
 
     cell(int id, int x, int y) : id(id), x(x), y(y), isInCity(false), isOccupied(false), domain(nullptr), building(nullptr), district(nullptr) {}
+
+    void GenerateResource(std::string domain_type){
+        //TODO
+        return;
+    }
+
+
 };
 
 class district {
@@ -96,11 +104,13 @@ public:
     cell* cell;
 };
 
+bool checkfunction();
+
 class domain {
 public:
     int id;
     int distance;
-    int size = 35;
+    int size = 0;
     std::string type;
     std::vector<std::vector<cell>> cells;
 
@@ -154,8 +164,16 @@ public:
         crays.AddSineWave(iterations);
 
         for (int i = 0; i < 10; i++){
+            std::vector<cell> row;
+            cells.push_back(row);
             for (int j = 0; j < 10; j++){
                 //funzione per controllare se l'esagono con quelle coordinate è nell'area del poligono disegnato
+                if (checkfunction()){
+                    size++;
+                    cell c(i * 10 + j, i, j);
+                    c.GenerateResource(type);
+                    row.push_back(c);
+                }
             }
         }
     }
@@ -243,9 +261,7 @@ S_System createSystem(int &seed, int &id) {
             d.select_type(seed);
             d.generate_domain(seed);
         }
-
     }
-
     return s;
 }
 
