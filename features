@@ -1,13 +1,11 @@
 Features 
 Map, solar systems and planets procedural generation with sine wave biasing and edges convoltuion
-
 Hexagonal map distance calculation and coordinate system
-
+Discretization of sine biased map into hexagons
 
 
 
 
 
 Todo:
-Resource procedural generation
-Discretization of sine biased map into hexagons
+Resources procedural generation
