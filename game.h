@@ -58,9 +58,48 @@ public:
             if (rays[i].length > 1.0){
                 rays[i].length = 1.0;
             }
+            if (rays[i].length < 0.5){
+                rays[i].length = 0.5;
+            }
         }       
     }
 };
+
+
+
+
+bool checkfunction(int x, int y, convolutionable_rays rays){
+    //normalize
+    float normx = (x - 5) / 5.0;
+    float normy = (x - 5) / 5.0;
+
+    for (int i = 0; i < rays.rays.size(); i++){
+        //find Ax, Ay and Bx, By
+        float Ax = rays.rays[i].length * std::cos(rays.rays[i].rotation);
+        float Ay = rays.rays[i].length * std::sin(rays.rays[i].rotation);
+        float Bx = rays.rays[i+1].length * std::cos(rays.rays[i+1].rotation);
+        float By = rays.rays[i+1].length * std::sin(rays.rays[i+1].rotation);
+        //find intersection
+        float INTx = (Ax * By - Ay * Bx) * (normx) / (normx * (Ay - By) + normy * (Bx - Ax));
+        float INTy = (Ax * By - Ay * Bx) * (normy) / (normx * (Ay - By) + normy * (Bx - Ax));
+        //check if intersection is inside plane section with cross product
+        bool InLeft = ((Bx * normy) - (By * normx) <= 0);
+        bool InRight = ((Ax * normy) - (Ay * normx) >= 0);
+        if (InLeft && InRight){
+            //calculate distance
+            if (std::sqrt(std::pow(INTx, 2) + std::pow(INTy, 2)) > std::sqrt(pow(normx, 2) + pow(normy, 2))){
+                return 0;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
+};
+
+
+
+
 
 class cell {
 public:
@@ -103,8 +142,6 @@ public:
     std::string owner;
     cell* cell;
 };
-
-bool checkfunction();
 
 class domain {
 public:
@@ -168,7 +205,7 @@ public:
             cells.push_back(row);
             for (int j = 0; j < 10; j++){
                 //funzione per controllare se l'esagono con quelle coordinate è nell'area del poligono disegnato
-                if (checkfunction()){
+                if (checkfunction(i, j, crays)){
                     size++;
                     cell c(i * 10 + j, i, j);
                     c.GenerateResource(type);
