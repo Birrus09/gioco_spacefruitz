@@ -26,8 +26,6 @@ class ray{
 class convolutionable_rays{
 public:
     std::vector<ray> rays;
-
-
     void convolution(){
         std::vector<ray> conv_rays;
         for (int i = 0; i < rays.size(); i ++){
@@ -95,6 +93,7 @@ bool checkfunction(int x, int y, convolutionable_rays rays){
             }
         }
     }
+    return 0;
 };
 
 
@@ -115,12 +114,39 @@ public:
 
     cell(int id, int x, int y) : id(id), x(x), y(y), isInCity(false), isOccupied(false), domain(nullptr), building(nullptr), district(nullptr) {}
 
-    void GenerateResource(std::string domain_type){
-        //TODO
+
+
+
+    void GenerateResource(std::string domain_type, int &seed){
+        if (domain_type == "asteroid"){
+            if (chance(0.02, seed)){
+                resource = "Premium_currency";
+                std::cout << "generated premium currency " << std::endl;
+            }
+            if (chance(0.05, seed)){
+                resource = "Crystals";
+            }
+            if (chance(0.05, seed)){
+                resource = "Metals";
+            }
+        }
+        if (domain_type == "molten planet"){
+            if (chance(0.04, seed)){
+                resource = "Metals";
+            }
+        }
+        if (domain_type == "alpine planet"){
+            if (chance(0.05, seed)){
+                resource = "Crystals";
+            }
+        }
+        if (domain_type == "gas planet"){
+            if (chance(0.03, seed)){
+                resource = "Gases";
+            }
+        }
         return;
     }
-
-
 };
 
 class district {
@@ -208,11 +234,12 @@ public:
                 if (checkfunction(i, j, crays)){
                     size++;
                     cell c(i * 10 + j, i, j);
-                    c.GenerateResource(type);
+                    c.GenerateResource(type, seed);
                     row.push_back(c);
                 }
             }
         }
+        std::cout << "domain " << id << " generated " << size << " cells\n";
     }
 };
 
@@ -241,8 +268,6 @@ class Map {
 public:
     std::vector<std::vector<node>> nodes;
 };
-
-
 
 
 star CreateStar(int &seed, int id) {
@@ -315,9 +340,6 @@ node generate_Node(int &seed, int &id) {
     }
     return n;
 }
-
-
-
 
 Map CreateMap(int seed, int density, int id = 0){
     int width = 25, height = 25;
