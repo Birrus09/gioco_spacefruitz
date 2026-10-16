@@ -69,7 +69,7 @@ public:
 bool checkfunction(int x, int y, convolutionable_rays rays){
     //normalize
     float normx = (x - 5) / 5.0;
-    float normy = (x - 5) / 5.0;
+    float normy = (y - 5) / 5.0;
 
     for (int i = 0; i < rays.rays.size(); i++){
         //find Ax, Ay and Bx, By
