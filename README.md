@@ -1,1 +1,1 @@
-4X Futuristici sci-fi game, with procedural galaxies, complex mechanics and lots of cool features
+4X futuristic sci-fi game, with procedural galaxies, complex mechanics and lots of cool features
