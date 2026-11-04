@@ -1,14 +1,17 @@
+using System.Globalization;
+
 namespace PosmosVV.Proc
 {
     public static class ByteUtil
     {
         public static byte[] RGB_Parser(string arg)
         {
-            byte[] c = new byte[3];
-            c[0] = (byte)(arg[0] + arg[1]);
-            c[1] = (byte)(arg[2] + arg[3]);
-            c[2] = (byte)(arg[4] + arg[5]);
-            return c;
+            return
+            [
+                byte.Parse(arg[..2], NumberStyles.HexNumber),
+                byte.Parse(arg[2..4], NumberStyles.HexNumber),
+                byte.Parse(arg[4..6], NumberStyles.HexNumber)
+            ];
         }
     }
 
@@ -215,7 +218,7 @@ namespace PosmosVV.Proc
                 b.revolution_speed = RandomGen.IntervalF(10.0f, 100.0f, ref seed);
                 b.rotation_speed = RandomGen.IntervalF(0.1f, 1.0f, ref seed);
 
-                b.temperature = (star.temperature * (bodiesss - i)/(bodiesss)) * 0.3f -800.0f;
+                b.temperature = (star.temperature * (bodiesss - i)/(bodiesss)) * 0.3f - 800.0f;
 
                 
                 b.FindType(ref seed);
