@@ -211,6 +211,7 @@ namespace PosmosVV.Proc
                         }
                         o.temperature = RandomGen.IntervalF(-20.0f, 20.0f, ref seed);
                         o.temperature = (b.temperature) * 0.2f + (star.out_temp - 2000.0f) * 1.4f;
+                        o.FindType(ref seed);
                         b.Orbits.Add(o);
                     }
                 }
