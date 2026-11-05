@@ -68,7 +68,7 @@ class Player
                     if (galaxy.systems[i].Primary_bodies[j].type == Founding_Species.preferred_planet)
                     {
                         Domains.Add(galaxy.systems[i]);
-                        galaxy.systems[i].Primary_bodies[j].DOM = new PosmosVV.proc.Domain();
+                        galaxy.systems[i].Primary_bodies[j].DOM = new Domain();
                         galaxy.systems[i].Primary_bodies[j].DOM.DOMINIT(20);
                     };
                 }
