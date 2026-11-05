@@ -15,6 +15,24 @@ namespace PosmosVV.Proc
         }
     }
 
+    public class hex{
+        public int[] coords;
+    }
+    public class Domain{
+        public hex[] HEXMAP;
+
+        public Domain(){
+
+        }
+        public void DOMINIT(int size){
+            for (int i = 0; i < size; i++)
+            {
+                HEXMAP[i] = new hex();
+                HEXMAP[i].coords = new int[2];
+            }
+        }
+    }
+
 
     public class Body
     {
@@ -30,6 +48,7 @@ namespace PosmosVV.Proc
         public int distance;
         public bool hasOrbitals = false;
         public byte[] RGB = new byte[3];
+        public Domain DOM = null;
 
         public Body()
         {
@@ -147,6 +166,7 @@ namespace PosmosVV.Proc
             temperature = RandomGen.IntervalF(3000.0f, 6000.0f, ref seed) * size * 2 / 500;
             out_temp = (int)temperature / 10;
             radiation = RandomGen.Interval(100, 10000, ref seed) * out_temp * size / 500;
+            type = "xxxxx";
         }
 
     }
